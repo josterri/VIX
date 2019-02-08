@@ -14,7 +14,7 @@ restrict_to_start_end_date = function(data, data_type = "tick", start_time = "02
         data = data[which(data$TRADE_DATE >= start_date & data$TRADE_DATE <= end_date), ]
         
         # VIX Spot data
-    } else if (data_type == "Spot") {
+    } else if (data_type == "spot") {
         # Time range
         data = data[which(data$TIME_STAMP >= start_time & data$TIME_STAMP <= end_time), ]
         # Date range
@@ -49,7 +49,6 @@ edit_time_date = function(VIXFutures) {
 }
 
 ## create data minute-by-minute resolution, both for the VIX index and the VIX future
-
 create_minute_data = function(data, data_type = "tick", feature = "MID_QUOTE") {
     if (data_type == "tick") {
         # new column with datetime
@@ -70,8 +69,7 @@ create_minute_data = function(data, data_type = "tick", feature = "MID_QUOTE") {
         }
         
         # column names change:
-        colnames(VIXfutures_rd) = c("Datetime", "MID_QUOTE")
-        
+        colnames(VIXFutures_rd) = c("Datetime", "MID_QUOTE")
         return(VIXFutures_rd)
         
     } else if (data_type == "spot") {
@@ -91,7 +89,7 @@ create_minute_data = function(data, data_type = "tick", feature = "MID_QUOTE") {
             VIXSpot_rd$relevant_data[i] = tail(VIXSpot$INDEX_VALUE[VIXSpot$Datetime == VIXSpot_rd$Index[i]], n = 1)
         }
         # column names change:
-        colnames(VIXindex_rd) = c("Datetime", "INDEX_VALUE")
+        colnames(VIXSpot_rd) = c("Datetime", "INDEX_VALUE")
         return(VIXSpot_rd)
     }
 }
